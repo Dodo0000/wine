@@ -9,7 +9,7 @@ class BayesWine(object):
     def __init__(self):
         np.set_printoptions(precision=6, suppress=True, linewidth=1000)
         pd.set_option('display.width', 1000)
-        with open('./TrainingData.txt', 'r') as rf:
+        with open('./TrainingData_2.txt', 'r') as rf:
             self.pdData = pd.read_csv(rf, header=None) # [178 rows x 14 columns]
 
 
