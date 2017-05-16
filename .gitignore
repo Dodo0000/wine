@@ -1,10 +1,6 @@
 Data.txt
 venv/
-TestingData_50.txt
-TestingData_70.txt
-TrainingData_50.txt
-TrainingData_70.txt
-
+TempTrainingData.txt
 
 # Project stuff
 entrance/settings_database.py

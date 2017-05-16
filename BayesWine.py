@@ -6,7 +6,7 @@ import math
 import operator
 
 
-class BayesWine(object):
+class NaiveBayes(object):
     """
     constructor:
         1) Training data file's path
@@ -42,7 +42,26 @@ class BayesWine(object):
         print(self.getDecision(testString))
 
 
+class DistanceToMeanVec(object):
+    def __init__(self, trainingDataPath):
+        np.set_printoptions(precision=6, suppress=True, linewidth=1000)
+        pd.set_option('display.width', 1000)
+        with open(trainingDataPath, 'r') as rf:
+            self.pdData = pd.read_csv(rf, header=None)
+
+    def getMeanVector(self, classNum):
+        # return self.pdData.loc[self.pdData[0]==classNum, 1:].mean()
+        print(self.pdData.loc[self.pdData[0]==classNum, 1:].mean())
+
+
+
+
+
 if __name__ == '__main__':
-    import sys
-    obj = BayesWine('./Data.txt')
-    obj.test(sys.argv[1])
+    # import sys
+    # obj = NaiveBayes('./Data.txt')
+    # obj.test(sys.argv[1])
+
+    obj = DistanceToMeanVec('./Data.txt')
+    obj.getMeanVector(1)
+
