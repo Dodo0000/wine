@@ -3,7 +3,7 @@
 system arguments:
 1) Training data ratio (e.g. 0.5)
 """
-from BayesWine import BayesWine
+from BayesWine import NaiveBayes, MinDistance
 import sys
 import random
 import subprocess
@@ -29,8 +29,8 @@ with open('TempTrainingData.txt', 'w') as wf_Train:
             classSetDict[key].remove(line)
             # classSetDict中剩下的已是測試資料
 
-# 利用BayesWine進行分類
-bayesObj = BayesWine('TempTrainingData.txt')
+# 利用NaiveBayes進行分類
+bayesObj = NaiveBayes('TempTrainingData.txt')
 for classNum in classSetDict.keys(): # '1', '2', '3'
     for line in classSetDict[classNum]:
         if bayesObj.getDecision(line) == int(classNum):
@@ -45,4 +45,21 @@ for key, value in sorted(correctnessDict.items(), key=operator.itemgetter(0)):
 for key, value in sorted(classSetDict.items(), key=operator.itemgetter(0)):
     print('Class' + key + ' 的測試數量：' + str(len(value)) + '  訓練數量: ' + str(totalDataCountDict[int(key)]-len(value)) + '  訓練資料百分比: ' + str(round(100*(totalDataCountDict[int(key)]-len(value))/totalDataCountDict[int(key)], 2)) + ' %')
 
+print('---------------------')
+print('最短歐式距離 :')
+# 利用NaiveBayes進行分類
+minDistanceObj = MinDistance('TempTrainingData.txt')
+for classNum in classSetDict.keys(): # '1', '2', '3'
+    for line in classSetDict[classNum]:
+        if minDistanceObj.getClassification(line) == int(classNum):
+            correctnessDict['Class' + classNum] += 1
+# 正確率計算
+for num in range(1, 4):
+    correctnessDict['Class' + str(num)] = correctnessDict['Class' + str(num)] / float(len(classSetDict[str(num)]))
+# 列印
+for key, value in sorted(correctnessDict.items(), key=operator.itemgetter(0)):
+    print(key + ' 的正確率為' + str(value))
+
+for key, value in sorted(classSetDict.items(), key=operator.itemgetter(0)):
+    print('Class' + key + ' 的測試數量：' + str(len(value)) + '  訓練數量: ' + str(totalDataCountDict[int(key)]-len(value)) + '  訓練資料百分比: ' + str(round(100*(totalDataCountDict[int(key)]-len(value))/totalDataCountDict[int(key)], 2)) + ' %')
 subprocess.call(['rm', 'TempTrainingData.txt'])
