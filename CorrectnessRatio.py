@@ -9,7 +9,8 @@ import random
 import subprocess
 import operator
 
-
+print('---------------------')
+print('Bayes Classifier :')
 totalDataCountDict = {1:59, 2:71, 3:48} # 每個class資料筆數
 correctnessDict = {'Class1':0, 'Class2':0, 'Class3':0}
 # 初始化classSetList
@@ -46,8 +47,9 @@ for key, value in sorted(classSetDict.items(), key=operator.itemgetter(0)):
     print('Class' + key + ' 的測試數量：' + str(len(value)) + '  訓練數量: ' + str(totalDataCountDict[int(key)]-len(value)) + '  訓練資料百分比: ' + str(round(100*(totalDataCountDict[int(key)]-len(value))/totalDataCountDict[int(key)], 2)) + ' %')
  
 print('---------------------')
-print('最短歐式距離 :')
-# 利用NaiveBayes進行分類
+print('minimum distances :')
+correctnessDict = {'Class1':0, 'Class2':0, 'Class3':0}
+# 利用MinDistance進行分類
 minDistanceObj = MinDistance('TempTrainingData.txt')
 for classNum in classSetDict.keys(): # '1', '2', '3'
     for line in classSetDict[classNum]:
@@ -62,4 +64,5 @@ for key, value in sorted(correctnessDict.items(), key=operator.itemgetter(0)):
 
 for key, value in sorted(classSetDict.items(), key=operator.itemgetter(0)):
     print('Class' + key + ' 的測試數量：' + str(len(value)) + '  訓練數量: ' + str(totalDataCountDict[int(key)]-len(value)) + '  訓練資料百分比: ' + str(round(100*(totalDataCountDict[int(key)]-len(value))/totalDataCountDict[int(key)], 2)) + ' %')
+
 subprocess.call(['rm', 'TempTrainingData.txt'])
