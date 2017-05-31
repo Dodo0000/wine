@@ -42,9 +42,6 @@ for num in range(1, 4):
 # 列印
 for key, value in sorted(correctnessDict.items(), key=operator.itemgetter(0)):
     print(key + ' 的正確率為' + str(value))
-
-for key, value in sorted(classSetDict.items(), key=operator.itemgetter(0)):
-    print('Class' + key + ' 的測試數量：' + str(len(value)) + '  訓練數量: ' + str(totalDataCountDict[int(key)]-len(value)) + '  訓練資料百分比: ' + str(round(100*(totalDataCountDict[int(key)]-len(value))/totalDataCountDict[int(key)], 2)) + ' %')
  
 print('---------------------')
 print('minimum distances :')
@@ -62,6 +59,7 @@ for num in range(1, 4):
 for key, value in sorted(correctnessDict.items(), key=operator.itemgetter(0)):
     print(key + ' 的正確率為' + str(value))
 
+print('---------------------')
 for key, value in sorted(classSetDict.items(), key=operator.itemgetter(0)):
     print('Class' + key + ' 的測試數量：' + str(len(value)) + '  訓練數量: ' + str(totalDataCountDict[int(key)]-len(value)) + '  訓練資料百分比: ' + str(round(100*(totalDataCountDict[int(key)]-len(value))/totalDataCountDict[int(key)], 2)) + ' %')
 
