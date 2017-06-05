@@ -38,6 +38,11 @@ class NaiveBayes(object):
 
         return sorted(decisionValue.items(), key=operator.itemgetter(1))[0][0]
 
+    def BattacharyyaBound(self):
+        pass
+
+
+
     def test(self, testString):
         print(self.getDecision(testString))
 
@@ -59,8 +64,19 @@ class MinDistance(object):
         for classNum in range(1, 4):
             distanceDict[classNum] = norm(inputVector - self.getMeanVector(classNum))
         return sorted(distanceDict.items(), key=operator.itemgetter(1))[0][0]
-        # for key, value in distanceDict.items():
-        #     print(str(key) + ' ' + str(value))
+
+
+# class BhattacharyyaBound(object):
+#     def __init__(self):
+#         pass
+
+#     def function(self):
+        
+
+
+
+
+
 
 
 

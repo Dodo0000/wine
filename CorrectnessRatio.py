@@ -30,13 +30,26 @@ with open('TempTrainingData.txt', 'w') as wf_Train:
             classSetDict[key].remove(line)
             # classSetDict中剩下的已是測試資料
 
+# 用以計算總正確率
+totalCorrectNumber = 0
 # 利用NaiveBayes進行分類
 bayesObj = NaiveBayes('TempTrainingData.txt')
 for classNum in classSetDict.keys(): # '1', '2', '3'
     for line in classSetDict[classNum]:
         if bayesObj.getDecision(line) == int(classNum):
             correctnessDict['Class' + classNum] += 1
-# 正確率計算
+            totalCorrectNumber += 1
+
+# 總正確率計算
+number_of_data_in_TempTraining = 0
+for key in classSetDict.keys():
+    number_of_data_in_TempTraining += len(classSetDict[key])
+
+totalCorrectnessRatio = float(totalCorrectNumber) / float(number_of_data_in_TempTraining)
+print('***總正確率為: ' + str(totalCorrectnessRatio))
+
+
+# 個別類別正確率計算
 for num in range(1, 4):
     correctnessDict['Class' + str(num)] = correctnessDict['Class' + str(num)] / float(len(classSetDict[str(num)]))
 # 列印
@@ -46,13 +59,20 @@ for key, value in sorted(correctnessDict.items(), key=operator.itemgetter(0)):
 print('---------------------')
 print('minimum distances :')
 correctnessDict = {'Class1':0, 'Class2':0, 'Class3':0}
+totalCorrectNumber = 0
 # 利用MinDistance進行分類
 minDistanceObj = MinDistance('TempTrainingData.txt')
 for classNum in classSetDict.keys(): # '1', '2', '3'
     for line in classSetDict[classNum]:
         if minDistanceObj.getClassification(line) == int(classNum):
             correctnessDict['Class' + classNum] += 1
-# 正確率計算
+            totalCorrectNumber += 1
+
+# 總正確率計算
+totalCorrectnessRatio = float(totalCorrectNumber) / float(number_of_data_in_TempTraining)
+print('***總正確率為: ' + str(totalCorrectnessRatio))
+
+# 個別類別正確率計算
 for num in range(1, 4):
     correctnessDict['Class' + str(num)] = correctnessDict['Class' + str(num)] / float(len(classSetDict[str(num)]))
 # 列印
