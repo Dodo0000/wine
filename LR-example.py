@@ -1,47 +1,33 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import pandas as pd
 
 #用0,1去做分類
 
-dataset = np.array([
-((1, -0.4, 0.3), 0),
-((1, -0.3, -0.1), 0),
-((1, -0.2, 0.4), 0),
-((1, -0.1, 0.1), 0),
-((1, 0.6, -0.5), 0), #非線性分割點
-
-((1, 0.8, 0.7), 1),
-((1, 0.9, -0.5), 1),
-((1, 0.7, -0.9), 1),
-((1, 0.8, 0.2), 1),
-((1, 0.4, -0.6), 1)])
-
-# print(dataset)
+data = pd.read_csv('testData.csv', header=None)
+# print(data)
 
 #計算機率函數
-
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
     
 #計算平均梯度
-
-def gradient(dataset, w): # 偏微分方向
+def gradient(data, w): # 偏微分方向
     g = np.zeros(len(w))
-    for x, y in dataset: # x是訓練資料 y是該筆資料屬於的類別
-        x = np.array(x)
+    for index, row in data.iterrows(): # x是訓練資料 y是該筆資料屬於的類別
+        x = np.array(row[[0, 1, 2]])
         error = sigmoid(w.T.dot(x))
-        g += (error - y) * x
-    return g / len(dataset)
+        g += (error - float(row[[3]])) * x
+    return g / len(data)
 
 #計算現在的權重的錯誤有多少
-
-def cost(dataset, w): # Loss funcion
+def cost(data, w): # Loss funcion
     total_cost = 0
-    for x, y in dataset:
-        x = np.array(x) # 訓練資料x
+    for index, row in data.iterrows():
+        x = np.array(row[[0, 1, 2]]) # 訓練資料x
         error = sigmoid(w.T.dot(x))
-        total_cost += abs(y - error)
+        total_cost += abs(row[[3]] - error)
     return total_cost
 
 def logistic(dataset): #演算法實作
@@ -65,24 +51,39 @@ def logistic(dataset): #演算法實作
 
     plt.plot(range(limit), costs)
     plt.show()
-    # plt.savefig('./CostPlot.png', format='png')
     return w
-#執行
+# #執行
 
 
-w = logistic(dataset)
+w = logistic(data)
 #畫圖
 print(w)
 
-ps = [v[0] for v in dataset]
-fig = plt.figure()
-ax1 = fig.add_subplot(111)
+# ps = [v[0] for v in dataset]
+# fig = plt.figure()
+# ax1 = fig.add_subplot(111)
 
-ax1.scatter([v[1] for v in ps[:5]], [v[2] for v in ps[:5]], s=10, c='b', marker="o", label='O')
-ax1.scatter([v[1] for v in ps[5:]], [v[2] for v in ps[5:]], s=10, c='r', marker="x", label='X')
-l = np.linspace(-2,2)
-a,b = -w[1]/w[2], -w[0]/w[2]
-ax1.plot(l, a*l + b, 'b-')
-plt.legend(loc='upper left');
+# ax1.scatter([v[1] for v in ps[:5]], [v[2] for v in ps[:5]], s=10, c='b', marker="o", label='O')
+# ax1.scatter([v[1] for v in ps[5:]], [v[2] for v in ps[5:]], s=10, c='r', marker="x", label='X')
+# l = np.linspace(-2,2)
+# a,b = -w[1]/w[2], -w[0]/w[2]
+# ax1.plot(l, a*l + b, 'b-')
+# plt.legend(loc='upper left');
 # plt.show()
-# plt.savefig('./Plots.png', format='png')
+# # plt.savefig('./Plots.png', format='png')
+
+
+
+
+
+
+# [[(1, -0.4, 0.3) 0]
+#  [(1, -0.3, -0.1) 0]
+#  [(1, -0.2, 0.4) 0]
+#  [(1, -0.1, 0.1) 0]
+#  [(1, 0.6, -0.5) 0]
+#  [(1, 0.8, 0.7) 1]
+#  [(1, 0.9, -0.5) 1]
+#  [(1, 0.7, -0.9) 1]
+#  [(1, 0.8, 0.2) 1]
+#  [(1, 0.4, -0.6) 1]]
