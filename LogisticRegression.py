@@ -26,17 +26,17 @@ def sigmoid(z):
     
 #計算平均梯度
 
-def gradient(dataset, w):
+def gradient(dataset, w): # 偏微分方向
     g = np.zeros(len(w))
-    for x, y in dataset:
+    for x, y in dataset: # x是訓練資料 y是該筆資料屬於的類別
         x = np.array(x)
         error = sigmoid(w.T.dot(x))
         g += (error - y) * x
     return g / len(dataset)
 
-#計算現在的權重的錯誤有多少(Loss funcion)
+#計算現在的權重的錯誤有多少
 
-def cost(dataset, w):
+def cost(dataset, w): # Loss funcion
     total_cost = 0
     for x, y in dataset:
         x = np.array(x) # 訓練資料x
@@ -48,23 +48,24 @@ def logistic(dataset): #演算法實作
 
     w = np.zeros(3) #用0 + 0*x1 + 0*x2當作初始設定  (初始設定w為(0, 0, 0))
 
-    limit = 10 #更新十次後停下
+    limit = 10 # 更新十次後停下
 
-    eta = 1 #更新幅度
+    eta = 1 # 更新幅度
 
-    costs = [] #紀錄每次更新權重後新的cost是多少
+    costs = [] # 紀錄每次更新權重後新的cost是多少
 
     for i in range(limit):
-        current_cost = cost(dataset, w)
+        current_cost = cost(dataset, w) # 當前訓練iteration的cost
         print('current_cost=' + str(current_cost))
         costs.append(current_cost)
-        w = w - eta * gradient(dataset, w)  # w更新的方式: w - learning_rate * 梯度
-        eta *= 0.95 #更新幅度，逐步遞減
+        w = w - eta * gradient(dataset, w)  # w更新的方式: w - learning_rate * 梯度 (例如第一輪，試算出w在w=[0 0 0]時對L的偏微結果)
+        eta *= 0.95 # Learning Rate，逐步遞減
 
     #畫出cost的變化曲線，他應該要是不斷遞減 才是正確
 
     plt.plot(range(limit), costs)
-    plt.savefig('./CostPlot.png', format='png')
+    plt.show()
+    # plt.savefig('./CostPlot.png', format='png')
     return w
 #執行
 
@@ -84,4 +85,4 @@ a,b = -w[1]/w[2], -w[0]/w[2]
 ax1.plot(l, a*l + b, 'b-')
 plt.legend(loc='upper left');
 # plt.show()
-plt.savefig('./Plots.png', format='png')
+# plt.savefig('./Plots.png', format='png')
