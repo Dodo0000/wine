@@ -59,7 +59,7 @@ class LogisticRegression(object):
         # w = np.zeros(3) #初始設定w為(0, 0,..., 0)
         w = np.random.rand(14) #初始設定w為(0, 0,..., 0)
         iterations = 100 # 更新100次後停下
-        learning_rate = 0.01 # 更新幅度
+        learning_rate = 0.1 # 更新幅度
 
         costs = [] # 紀錄每次更新權重後新的cost是多少
 
@@ -160,4 +160,3 @@ if __name__ == '__main__':
     else:
         obj = TempData('testData.csv')
     obj.getWeights()
-    
