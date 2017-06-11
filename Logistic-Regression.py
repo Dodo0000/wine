@@ -42,10 +42,10 @@ class LogisticRegression(object):
             error = self.sigmoid(w.T.dot(x))
             g += (error - y) * x
             # print(g)
-        return g
+        return g / len(dataset)
 
     # 計算現在的權重的錯誤有多少
-    def cost(self, dataset, w): # Loss funcion
+    def cost(self, dataset, w):
         total_cost = 0
         for x, y in dataset:
             x = np.array(x) # 訓練資料x
@@ -55,7 +55,6 @@ class LogisticRegression(object):
 
     # 演算法實作
     def logistic_regression(self, dataset):
-        # w = np.zeros(3) #初始設定w為(0, 0,..., 0)
         w = np.random.rand(14) #初始設定w為(0, 0,..., 0)
         iterations = 100 # 更新100次後停下
         learning_rate = 0.1 # 更新幅度
@@ -64,27 +63,29 @@ class LogisticRegression(object):
 
         for i in range(iterations):
             current_cost = self.cost(dataset, w) # 當前訓練iteration的cost
-            print('current_cost=' + str(current_cost))
+            # print('current_cost=' + str(current_cost))
             costs.append(current_cost)
             w = w - learning_rate * self.get_gradient(dataset, w)  # w更新的方式: w - learning_rate * 梯度 (例如第一輪，試算出w在w=[0 0 0]時對L的偏微結果)
             # print(w)
             learning_rate *= 0.95 # Learning Rate，逐步遞減
 
         # 畫出cost的變化曲線，他應該要是不斷遞減 才是正確
-        # plt.plot(range(iterations), costs)
+        plt.plot(range(iterations), costs)
         # plt.show()
-        # plt.savefig('Plot.png', format='png')
+        plt.savefig('Plot.png', format='png')
         return w
 
     def get_classification(self, dataVector):
         data = self.data_preprocessing()
         w = self.logistic_regression(data)
-        # print(type(w))
-        dataVector = np.array(dataVector, dtype='float')
+        # print(w)
+        dataVector = np.array(dataVector)
+        # print(dataVector)
+        # print(w[1:].T.dot(dataVector))
         probability = self.sigmoid(w[1:].T.dot(dataVector) + w[0])
         print(probability)
 
 
 if __name__ == '__main__':
     obj = LogisticRegression('data.csv')
-    obj.get_classification([13.83,1.57,2.62,20,115,2.95,3.4,.4,1.72,6.6,1.13,2.57,1130])
+    obj.get_classification([12.17,1.45,2.53,19,104,1.89,1.75,.45,1.03,2.95,1.45,2.23,355])
