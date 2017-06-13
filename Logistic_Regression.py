@@ -27,7 +27,7 @@ class LogisticRegression(object):
             tempList.append(line[0])
             nestedData.append(tempList)
         nestedData = np.array(nestedData)
-        # print(nestedData)
+        print(nestedData)
         return nestedData
 
     # sigmoid function
@@ -70,22 +70,32 @@ class LogisticRegression(object):
             learning_rate *= 0.95 # Learning Rate，逐步遞減
 
         # 畫出cost的變化曲線，他應該要是不斷遞減 才是正確
-        plt.plot(range(iterations), costs)
+        # plt.plot(range(iterations), costs)
         # plt.show()
-        plt.savefig('Plot.png', format='png')
+        # plt.savefig('Plot.png', format='png')
         return w
 
-    def get_classification(self, dataVector):
+    def data_str_to_list(self, dataStr):
+        return [float(item) for item in dataStr.split(',')[1:]]
+
+    def get_classification(self, dataStr):
         data = self.data_preprocessing()
         w = self.logistic_regression(data)
         # print(w)
-        dataVector = np.array(dataVector)
+
+        dataVector = np.array(self.data_str_to_list(dataStr))
         # print(dataVector)
-        # print(w[1:].T.dot(dataVector))
+        # print(w[1:].T.dot(dataVector) + w[0])
         probability = self.sigmoid(w[1:].T.dot(dataVector) + w[0])
-        print(probability)
+        # print(probability)
+        if probability >= 0.5:
+            return 1
+        else:
+            return 0
+
 
 
 if __name__ == '__main__':
+    import sys
     obj = LogisticRegression('data.csv')
     obj.get_classification([12.17,1.45,2.53,19,104,1.89,1.75,.45,1.03,2.95,1.45,2.23,355])
