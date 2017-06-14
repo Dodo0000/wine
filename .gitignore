@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 Data.txt
 venv/
 TempTrainingData.txt
+=======
+
+>>>>>>> LR-WineData/master
 
 # Project stuff
 entrance/settings_database.py
@@ -82,4 +86,8 @@ coverage.xml
 docs/_build/
 
 # PyBuilder
+<<<<<<< HEAD
 target/
+=======
+target/
+>>>>>>> LR-WineData/master

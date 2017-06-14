@@ -4,6 +4,7 @@ import pandas as pd
 from numpy.linalg import inv, det, norm
 import math
 import operator
+from sklearn import preprocessing
 
 
 class NaiveBayes(object):
@@ -38,11 +39,6 @@ class NaiveBayes(object):
 
         return sorted(decisionValue.items(), key=operator.itemgetter(1))[0][0]
 
-    def BattacharyyaBound(self):
-        pass
-
-
-
     def test(self, testString):
         print(self.getDecision(testString))
 
@@ -53,6 +49,9 @@ class MinDistance(object):
         pd.set_option('display.width', 1000)
         with open(trainingDataPath, 'r') as rf:
             self.pdData = pd.read_csv(rf, header=None)
+        min_max_scaler = preprocessing.MinMaxScaler()
+        self.pdData = min_max_scaler.fit_transform(self.pdData)
+        self.pdData = pd.DataFrame(self.pdData)
 
     def getMeanVector(self, classNum):
         return self.pdData.loc[self.pdData[0]==classNum, 1:].mean()
@@ -66,29 +65,30 @@ class MinDistance(object):
         return sorted(distanceDict.items(), key=operator.itemgetter(1))[0][0]
 
 
-# class BhattacharyyaBound(object):
-#     def __init__(self):
-#         pass
+class BhattacharyyaBound(object):
+    def __init__(self, trainingDataPath):
+        with open(trainingDataPath, 'r') as rf:
+            self.pdData = pd.read_csv(rf, header=None)
 
-#     def function(self):
-        
+    def getCoVarianceMatrix(self, classNum):
+        return self.pdData.loc[self.pdData[0]==classNum, 1:].cov()
 
+    def getMeanVector(self, classNum):
+        return self.pdData.loc[self.pdData[0]==classNum, 1:].mean()
 
-
-
-
-
-
-
-
-
+    def Bhattacharyya(self):
+        print(self.pdData)
+        for classnum in range(1,4):
+            for classnum2 in range(classnum+1,4): 
+                bound = (1/8) * np.dot( np.dot( (self.getMeanVector(str(classnum))-self.getMeanVector(str(classnum2)).T, inv( (self.getCoVarianceMatrix(str(classnum))+self.getCoVarianceMatrix(str(classnum2)) /2 ) ), (self.getMeanVector(str(classnum))-self.getMeanVector(str(classnum2)))\
+                        + (1/2) * math.log(  det( (self.getCoVarianceMatrix(str(classnum))+self.getCoVarianceMatrix(str(classnum2))/2 )  /  np.sqrt( det(self.getCoVarianceMatrix[str(classnum)])*det(self.getCoVarianceMatrix(str(classnum2)) ) )
 
 if __name__ == '__main__':
     # import sys
-    # obj = NaiveBayes('./Data.txt')
-    # obj.test(sys.argv[1])
-
-    obj = MinDistance('./Data.txt')
+    # obj = NaiveBayes('./data.txt')
+    # obj = MinDistance('./data.txt')
     # obj.getMeanVector(1)
-    obj.getClassification('1,14.06,2.15,2.61,17.6,121,2.6,2.51,.31,1.25,5.05,1.06,3.58,1295')
-
+    # obj = BhattacharyyaBound('./data.txt')
+    # obj.getMeanVector(1)
+    # obj.getClassification('1,14.06,2.15,2.61,17.6,121,2.6,2.51,.31,1.25,5.05,1.06,3.58,1295')
+    # obj.Bhattacharyya()
