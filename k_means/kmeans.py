@@ -8,13 +8,13 @@ import random
 class kmeans(object):
     """
     kmeans類別實作kmeans演算法
-        - init: 資料path
+        - init: 資料dataFrame(預設讀取data.csv)
     get_result函式回傳分群結果
         - input: 要分幾群
         - output: 一個tuple，(分群結果dict, 中心點list, iterations次數)
     """
-    def __init__(self, dataPath):
-        self.dataDF = pd.read_csv(dataPath, header=None)
+    def __init__(self, data=pd.read_csv('./data.csv', header=None)):
+        self.dataDF = data
     
     def clustering(self, X, mu): # 傳入資料與k個mu的list，此函式作分群
         clusters_dict  = {} # {mu1: [資料1, 資料2, ...,資料N], mu2: [...]}
@@ -64,7 +64,7 @@ class kmeans(object):
 
         
 if __name__ == '__main__':
-    obj = kmeans('./data.csv')
+    obj = kmeans()
     result = obj.get_result(3)
     print(result[0])
     print('==================')
