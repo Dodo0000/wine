@@ -32,7 +32,7 @@ class visualization(object):
 
     def data_organization_origin(self):
         label_xy_axis_dict = dict()
-        print(self.PCA_result)
+        # print(self.PCA_result)
         for label in range(0, 3):
             label_xy_axis_dict[label] = list()
             x_axis_list = list()
