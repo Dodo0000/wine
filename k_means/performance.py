@@ -28,7 +28,7 @@ class visualization(object):
                 y_axis_list.append(item[1])
             x_y_axis_label_dict[key].append(x_axis_list)
             x_y_axis_label_dict[key].append(y_axis_list)
-        pprint(x_y_axis_label_dict)
+        return x_y_axis_label_dict
 
     def data_organization_origin(self):
         label_xy_axis_dict = dict()
