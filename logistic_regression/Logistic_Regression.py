@@ -55,7 +55,7 @@ class LogisticRegression(object):
 
     # 演算法實作
     def logistic_regression(self, dataset):
-        w = np.random.rand(14) #初始設定w為(0, 0,..., 0)
+        w = np.random.rand(14) #初始設定w為隨機的14為向量
         iterations = 100 # 更新100次後停下
         learning_rate = 0.1 # 更新幅度
 
@@ -63,10 +63,8 @@ class LogisticRegression(object):
 
         for i in range(iterations):
             current_cost = self.cost(dataset, w) # 當前訓練iteration的cost
-            # print('current_cost=' + str(current_cost))
             costs.append(current_cost)
-            w = w - learning_rate * self.get_gradient(dataset, w)  # w更新的方式: w - learning_rate * 梯度 (例如第一輪，試算出w在w=[0 0 0]時對L的偏微結果)
-            # print(w)
+            w = w - learning_rate * self.get_gradient(dataset, w)  # w更新的方式: w - learning_rate * 梯度 (例如第一輪，試算出w在w=[rand, rand ,..., rand]時對L的偏微結果)
             learning_rate *= 0.95 # Learning Rate，逐步遞減
 
         # 畫出cost的變化曲線，他應該要是不斷遞減 才是正確
@@ -81,18 +79,13 @@ class LogisticRegression(object):
     def get_classification(self, dataStr):
         data = self.data_preprocessing()
         w = self.logistic_regression(data)
-        # print(w)
 
         dataVector = np.array(self.data_str_to_list(dataStr))
-        # print(dataVector)
-        # print(w[1:].T.dot(dataVector) + w[0])
         probability = self.sigmoid(w[1:].T.dot(dataVector) + w[0])
-        # print(probability)
         if probability >= 0.5:
             return 1
         else:
             return 0
-
 
 
 if __name__ == '__main__':
