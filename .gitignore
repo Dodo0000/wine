@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-Data.txt
-venv/
-TempTrainingData.txt
-=======
-
->>>>>>> LR-WineData/master
 
 # Project stuff
 entrance/settings_database.py

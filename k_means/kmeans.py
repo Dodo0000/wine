@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from pprint import pprint
 import random
+from os.path import join
 
 
 class kmeans(object):
@@ -13,7 +14,7 @@ class kmeans(object):
         - input: 要分幾群
         - output: 一個tuple，(分群結果dict, 中心點list, iterations次數)
     """
-    def __init__(self, data=pd.read_csv('./data.csv', header=None)):
+    def __init__(self, data=pd.read_csv(join('../', 'data.csv'), header=None)):
         self.dataDF = data
     
     def clustering(self, X, mu): # 傳入資料與k個mu的list，此函式作分群

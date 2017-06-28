@@ -7,11 +7,12 @@ from pprint import pprint
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from os.path import join
 
 
 class visualization(object):
     def __init__(self):
-        self.dataDF = pd.read_csv('./data.csv', header=None)
+        self.dataDF = pd.read_csv(join('../', 'data.csv'), header=None)
         self.PCA_result = self.PCA()
 
     def data_organization_kmeans(self):
